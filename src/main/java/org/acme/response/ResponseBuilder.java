@@ -1,18 +1,16 @@
 package org.acme.response;
 
 import com.google.gson.Gson;
+import org.acme.Util.InterfacesUtil.Model;
 import org.acme.Util.PrimitiveUtil.StringUtil;
 import org.acme.exceptions.ValidacaoException;
-import org.acme.models.DTO.Response.ResponseFactory;
-import org.acme.models.Model;
-import org.acme.services.Service;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
 @ApplicationScoped
-public class ResponseBuilder extends Service {
+public class ResponseBuilder {
 
 
     public static Response returnResponse(ValidacaoException e) {

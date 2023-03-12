@@ -1,11 +1,11 @@
-package org.acme.Models;
+package org.acme.Models.Primitive;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class PrimiteAndLangTypesModel {
+public class PrimitiveAndJavaLangTypesModel {
     boolean valorBooleano;
     int valorInt;
     long valorLong;
