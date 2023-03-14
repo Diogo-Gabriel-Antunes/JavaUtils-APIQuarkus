@@ -5,10 +5,12 @@ import org.acme.Anotacao.DTO.LabelForm;
 import org.acme.Anotacao.DTO.Type;
 import org.acme.Exception.UtilException;
 import org.acme.Util.PrimitiveUtil.StringUtil;
+import org.acme.models.Venda;
 
 import javax.enterprise.context.ApplicationScoped;
 import java.lang.reflect.Field;
 import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 @ApplicationScoped
@@ -109,24 +111,37 @@ public class JsonUtil {
                 hashMap.remove(key);
             } else if (StringUtil.stringValida(String.valueOf(value))) {
                 String jsonSubClass = gson.toJson(value);
-                if (jsonSubClass.contains("{") && jsonSubClass.contains("}")) {
-                    ConcurrentHashMap subClass = gson.fromJson(jsonSubClass, ConcurrentHashMap.class);
-                    if (subClass.size() >= 2) {
-                        String newSubClass = validateSubClass(subClass);
-                        if(StringUtil.validaStringAposValidadeSubClass(newSubClass)){
-                            hashMap.remove(key);
-                        }else{
-                            hashMap.replace(key,newSubClass);
-                        }
-                    };
+                if (jsonSubClass.contains("{") && jsonSubClass.contains("}") && jsonSubClass.contains("[") && jsonSubClass.contains("]")) {
+                    Object[] objects = gson.fromJson(jsonSubClass, Object[].class);
+                    for (Object object : objects) {
+                        String jsonObject = gson.toJson(object);
+                        ConcurrentHashMap concurrentHashMap = gson.fromJson(jsonObject, ConcurrentHashMap.class);
+                        String retorno = validateSubClass(concurrentHashMap);
+                        validaAndRemoveAndReplacaObjectAndList(concurrentHashMap,key,retorno);
+                    }
+                } else if (jsonSubClass.contains("{") && jsonSubClass.contains("}")) {
+                    ConcurrentHashMap retorno = gson.fromJson(jsonSubClass, ConcurrentHashMap.class);
+                    if (retorno.size() >= 2) {
+                        String newSubClass = validateSubClass(retorno);
+                        validaAndRemoveAndReplacaObjectAndList(hashMap, key, newSubClass);
+                    }
+                    ;
                 }
             }
         });
     }
 
+    private static void validaAndRemoveAndReplacaObjectAndList(ConcurrentHashMap hashMap, Object key, String retorno) {
+        if (StringUtil.validaStringAposValidadeSubClass(retorno)) {
+            hashMap.remove(key);
+        } else {
+            hashMap.replace(key, retorno);
+        }
+    }
+
     private static String validateSubClass(ConcurrentHashMap hashMap) {
         Gson gson = new GsonUtil().parser;
-        novoHashMapValidado(hashMap,gson);
+        novoHashMapValidado(hashMap, gson);
         return gson.toJson(hashMap);
     }
 

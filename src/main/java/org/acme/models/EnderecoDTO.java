@@ -1,18 +1,18 @@
-package org.acme.Models;
+package org.acme.models;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.acme.Models.Enum.Estado;
-import org.acme.Models.Enum.TipoBairro;
-import org.acme.Models.Enum.TipoLogradouro;
-import org.acme.Util.InterfacesUtil.Model;
+import org.acme.models.Enum.Estado;
+import org.acme.models.Enum.TipoBairro;
+import org.acme.models.Enum.TipoLogradouro;
+import org.acme.Util.InterfacesUtil.DTO;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 
 @Getter
 @Setter
-public class Endereco implements Model {
+public class EnderecoDTO implements DTO {
     private String uuid;
     private String bairro;
     private String cep;

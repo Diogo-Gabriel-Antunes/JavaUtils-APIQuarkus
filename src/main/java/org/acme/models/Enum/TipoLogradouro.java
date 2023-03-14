@@ -1,4 +1,4 @@
-package org.acme.Models.Enum;
+package org.acme.models.Enum;
 
 public enum TipoLogradouro {
     Alameda("Alameda"), Avenida("Avenida"), Chácara("Chácara"), Colônia("Colônia"),

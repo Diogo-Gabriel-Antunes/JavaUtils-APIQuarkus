@@ -1,4 +1,4 @@
-package org.acme.Models;
+package org.acme.models;
 
 import lombok.Getter;
 import lombok.Setter;
