@@ -1,4 +1,4 @@
-package org.acme.models.Primitive;
+package org.acme.ModelsByTest.Primitive;
 
 import lombok.Getter;
 import lombok.Setter;

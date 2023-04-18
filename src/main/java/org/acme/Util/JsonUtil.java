@@ -5,12 +5,10 @@ import org.acme.Anotacao.DTO.LabelForm;
 import org.acme.Anotacao.DTO.Type;
 import org.acme.Exception.UtilException;
 import org.acme.Util.PrimitiveUtil.StringUtil;
-import org.acme.models.Venda;
 
 import javax.enterprise.context.ApplicationScoped;
 import java.lang.reflect.Field;
 import java.util.HashMap;
-import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 @ApplicationScoped
@@ -124,8 +122,8 @@ public class JsonUtil {
                     if (retorno.size() >= 2) {
                         String newSubClass = validateSubClass(retorno);
                         validaAndRemoveAndReplacaObjectAndList(hashMap, key, newSubClass);
-                    }
-                    ;
+                    };
+
                 }
             }
         });

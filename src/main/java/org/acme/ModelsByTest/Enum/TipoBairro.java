@@ -1,4 +1,4 @@
-package org.acme.models.Enum;
+package org.acme.ModelsByTest.Enum;
 
 public enum TipoBairro {
     Bairro("Bairro"), Bosque("Bosque"), Chácara("Chácara"), Conjunto("Conjunto"),

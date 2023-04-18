@@ -1,15 +1,15 @@
-package org.acme.models;
+package org.acme.ModelsByTest;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.acme.Util.InterfacesUtil.DTO;
+import org.acme.Util.InterfacesUtil.Model;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
-public class ClassDTO implements DTO {
+public class ClassModel implements Model {
     private String uuid;
     private String nome;
     private String sobrenome;
@@ -20,7 +20,6 @@ public class ClassDTO implements DTO {
     private LocalDate dataDeValidadeCNH;
     private String telefone;
     private String email;
-    private EnderecoDTO endereco;
     private LocalDateTime dataCriacao;
     private LocalDateTime dataAtualizacao;
 }

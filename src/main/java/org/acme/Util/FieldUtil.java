@@ -3,11 +3,13 @@ package org.acme.Util;
 
 import org.acme.Anotacao.DTO.Type;
 import org.acme.Util.InterfacesUtil.DTO;
+import org.acme.Util.InterfacesUtil.Invoker;
 import org.acme.Util.InterfacesUtil.Model;
 import org.acme.exceptions.ValidacaoException;
 
 import javax.enterprise.context.ApplicationScoped;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.HashMap;
 
 @ApplicationScoped
@@ -82,6 +84,37 @@ public class FieldUtil {
         }
 
     }
+    public <T> Object objectMapperModelToDto(Object model,Object dto,Class<T> classeFinal ){
+        try{
+            Class<?> aClass = model.getClass();
+            if(aClass != null){
+                Field[] declaredFields = aClass.getDeclaredFields();
+                for (Field field : declaredFields) {
+                    field.setAccessible(true);
+                    Object fieldValue = field.get(model);
+                    if(fieldValue != null){
+                        dto.getClass().getDeclaredMethod("set" + updateStringToGetorSet(field),field.getType()).invoke(dto,fieldValue);
+                    }
 
+                }
+            }
+            return classeFinal.cast(dto);
+        } catch (Throwable e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public void invokerExecutor(Invoker invoker){
+        try{
+            Method[] methods = invoker.getClass().getDeclaredMethods();
+            for (Method method : methods) {
+                method.setAccessible(true);
+                method.invoke(invoker);
+            }
+        }catch (Throwable t){
+            t.printStackTrace();
+        }
+    }
 
 }

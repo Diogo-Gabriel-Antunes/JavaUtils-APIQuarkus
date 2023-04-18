@@ -1,4 +1,4 @@
-package org.acme.models.Enum;
+package org.acme.ModelsByTest.Enum;
 
 public enum Estado {
     AC("AC"), AL("AL"), AM("AM"), AP("AP"), BA("BA"), CE("CE"), DF("DF"),
