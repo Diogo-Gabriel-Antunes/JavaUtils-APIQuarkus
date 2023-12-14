@@ -8,8 +8,10 @@ import org.acme.Util.InterfacesUtil.Model;
 import org.acme.exceptions.ValidacaoException;
 
 import javax.enterprise.context.ApplicationScoped;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.HashMap;
 
 @ApplicationScoped
@@ -110,10 +112,49 @@ public class FieldUtil {
             Method[] methods = invoker.getClass().getDeclaredMethods();
             for (Method method : methods) {
                 method.setAccessible(true);
-                method.invoke(invoker);
+                int length = method.getParameters().length;
+                if(length == 0){
+                    method.invoke(invoker);
+                }
             }
         }catch (Throwable t){
             t.printStackTrace();
+        }
+    }
+
+
+    public <I,O> O objectMapper(I input){
+        try{
+            Class<?> source = input.getClass();
+            Class<?> target = Class.forName(source.getName() + "DTO");
+
+            O targetClass = (O) target.getDeclaredConstructor().newInstance();
+
+            Field[] sourceFields = source.getDeclaredFields();
+            Field[] targetFields = target.getDeclaredFields();
+
+            Arrays.stream(sourceFields).forEach(sourceField ->
+                    Arrays.stream(targetFields).forEach(targetField -> {
+                        validate(sourceField, targetField);
+                        try {
+                            targetField.set(targetClass, sourceField.get(input));
+                        } catch (IllegalAccessException e) {
+                            e.printStackTrace();
+                        }
+                    }));
+
+            return targetClass;
+        }catch (Throwable t){
+            t.printStackTrace();
+
+        }
+        throw new RuntimeException("Erro na conversão");
+    }
+    private void validate(Field sourceField, Field targetField) {
+        if (sourceField.getName().equals(targetField.getName())
+                && sourceField.getType().equals(targetField.getType())) {
+            sourceField.setAccessible(true);
+            targetField.setAccessible(true);
         }
     }
 

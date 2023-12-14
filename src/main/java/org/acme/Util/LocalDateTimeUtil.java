@@ -17,4 +17,8 @@ public class LocalDateTimeUtil {
         LocalDate localDate = LocalDateUtil.deYYYYMMDD(str);
         return LocalDateTime.of(localDate, LocalTime.now());
     }
+    public static String retornaYYYYMMDDTHHMMSS(LocalDateTime date){
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+        return format.format(date);
+    }
 }
